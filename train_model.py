@@ -2,12 +2,11 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from ml.data import process_data
+from ml.data import read_data, process_data
 from ml.model import train_model, compute_model_metrics, inference
 
-data = pd.read_csv('./data/census_clean.csv')
 
-# Optional enhancement, use K-fold cross validation instead of a train-test split.
+data = read_data()
 train, test = train_test_split(data, test_size=0.20)
 
 cat_features = [

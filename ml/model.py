@@ -2,6 +2,8 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier
 
+from ml import MODEL_PATH
+
 import pickle
 import logging
 
@@ -29,7 +31,7 @@ def train_model(X_train, y_train):
     clf = RandomForestClassifier(random_state=0)
     clf.fit(X_train, y_train)
 
-    pickle.dump(clf, open('./model/random_forest.pkl', 'wb'))
+    pickle.dump(clf, open(MODEL_PATH, 'wb'))
     return clf
 
 
