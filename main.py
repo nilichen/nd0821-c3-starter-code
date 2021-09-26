@@ -27,7 +27,7 @@ class CensusData(BaseModel):
 
     class Config:
         schema_extra = {
-            "examples": [EXAMPLE_CENSUS_DATA_POS, EXAMPLE_CENSUS_DATA_NEG]}
+            "example": EXAMPLE_CENSUS_DATA_POS}
 
 
 app = FastAPI()
