@@ -1,3 +1,5 @@
 
 /random_forest.pkl
 /encoder.pkl
+/label_encoder.pkl
+/onehot_encoder.pkl

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field
 import pandas as pd
 
-from ml import MODEL_PATH, ENCODER_PATH, ALL_FEATURES, CAT_FEATURES, LABEL, EXAMPLE_CENSUS_DATA_POS, EXAMPLE_CENSUS_DATA_NEG
+from ml import MODEL_PATH, ONEHOT_ENCODER_PATH, ALL_FEATURES, CAT_FEATURES, LABEL, EXAMPLE_CENSUS_DATA_POS, EXAMPLE_CENSUS_DATA_NEG
 from ml.data import process_data
 from ml.model import inference
 
@@ -53,7 +53,7 @@ async def predict(data: CensusData):
             [LABEL]), "invalid input"
 
     model = pickle.load(open(MODEL_PATH, 'rb'))
-    encoder = pickle.load(open(ENCODER_PATH, 'rb'))
+    encoder = pickle.load(open(ONEHOT_ENCODER_PATH, 'rb'))
 
     X, _, _, _ = process_data(X=pd.DataFrame(
         [data.dict(by_alias=True)]), categorical_features=CAT_FEATURES, training=False, encoder=encoder)

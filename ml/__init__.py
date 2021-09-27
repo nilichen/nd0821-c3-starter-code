@@ -3,7 +3,8 @@ import os
 
 DATA_PATH = os.getcwd() + "/data/census_clean.csv"
 MODEL_PATH = os.getcwd() + "/model/random_forest.pkl"
-ENCODER_PATH = os.getcwd() + "/model/encoder.pkl"
+ONEHOT_ENCODER_PATH = os.getcwd() + "/model/onehot_encoder.pkl"
+LABEL_ENCODER_PATH = os.getcwd() + "/model/label_encoder.pkl"
 
 EXAMPLE_CENSUS_DATA_POS = {'age': 41,
                            'workclass': 'Private',

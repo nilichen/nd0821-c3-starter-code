@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
-from ml import DATA_PATH, ENCODER_PATH
+from ml import DATA_PATH, ONEHOT_ENCODER_PATH, LABEL_ENCODER_PATH
 
 import pickle
 
@@ -68,7 +68,9 @@ def process_data(
         X_categorical = encoder.fit_transform(X_categorical)
         y = lb.fit_transform(y.values).ravel()
 
-        pickle.dump(encoder, open(ENCODER_PATH, 'wb'))
+        pickle.dump(encoder, open(ONEHOT_ENCODER_PATH, 'wb'))
+        pickle.dump(lb, open(LABEL_ENCODER_PATH, 'wb'))
+
     else:
         X_categorical = encoder.transform(X_categorical)
         try:
