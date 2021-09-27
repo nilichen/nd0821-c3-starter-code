@@ -2,13 +2,13 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
-from ml import DATA_PATH, ONEHOT_ENCODER_PATH, LABEL_ENCODER_PATH
+from ml import ONEHOT_ENCODER_PATH, LABEL_ENCODER_PATH
 
 import pickle
 
 
-def read_data():
-    return pd.read_csv(DATA_PATH)
+def read_data(data_path):
+    return pd.read_csv(data_path)
 
 
 def process_data(

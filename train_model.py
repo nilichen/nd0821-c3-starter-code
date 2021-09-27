@@ -1,13 +1,11 @@
-# Script to train machine learning model.
-import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from ml.data import read_data, process_data
 from ml.model import train_model, compute_model_metrics, compute_model_metrics_on_slices, inference
-from ml import CAT_FEATURES, LABEL
+from ml import DATA_PATH, DATA_SAMPLE_PATH, CAT_FEATURES, LABEL
 
 
-data = read_data()
+data = read_data(DATA_PATH)
 train, test = train_test_split(data, test_size=0.20, random_state=0)
 
 X_train, y_train, encoder, lb = process_data(

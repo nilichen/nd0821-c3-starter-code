@@ -1,4 +1,5 @@
 
+import pandas as pd
 from sklearn.metrics import fbeta_score, precision_score, recall_score, plot_roc_curve
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
@@ -8,6 +9,8 @@ from ml.data import process_data
 
 import pickle
 import logging
+from os import name
+from collections import namedtuple
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -59,17 +62,18 @@ def compute_model_metrics(y, preds):
         Predicted labels, binarized.
     Returns
     -------
-    precision : float
-    recall : float
-    fbeta : float
+    namedtuple('Metrics', "Precision Recall FBeta")
     """
+    Metrics = namedtuple('Metrics', "Precision Recall FBeta")
+
     fbeta = fbeta_score(y, preds, beta=1, zero_division=1)
     precision = precision_score(y, preds, zero_division=1)
     recall = recall_score(y, preds, zero_division=1)
 
     logger.info(
         f"Precision: {precision:.2f}, Recall: {recall:.2f}, FBeta: {fbeta:.2f}")
-    return precision, recall, fbeta
+
+    return Metrics(precision, recall, fbeta)
 
 
 def inference(model, X):
@@ -100,13 +104,11 @@ def compute_model_metrics_on_slices(data, cat_feature):
         Feature to slice upon.
     Returns
     -------
-    None
+    pd.DataFrame: index is cat_feature values with Precision, Recall, FBeta as columns
     """
     def compute_model_metrics_on_slice(data_slice):
         X_slice, y_slice, _, _ = process_data(
             data_slice, categorical_features=CAT_FEATURES, label="salary", training=False, encoder=encoder, lb=lb)
-
-        logger.info(f"Model metrics on {cat_feature}: {data_slice.name}")
         return compute_model_metrics(y_slice, inference(model, X_slice))
 
     logger.info("-" * 50)
@@ -114,4 +116,10 @@ def compute_model_metrics_on_slices(data, cat_feature):
     encoder = pickle.load(open(ONEHOT_ENCODER_PATH, 'rb'))
     lb = pickle.load(open(LABEL_ENCODER_PATH, 'rb'))
 
-    data.groupby([cat_feature]).apply(compute_model_metrics_on_slice)
+    metrics_on_slices = pd.DataFrame.from_dict(
+        data.groupby([cat_feature]).apply(
+            compute_model_metrics_on_slice
+        ).to_dict(), orient='index').round(2)
+
+    logger.info('\t' + metrics_on_slices.to_string().replace('\n', '\n\t'))
+    return metrics_on_slices

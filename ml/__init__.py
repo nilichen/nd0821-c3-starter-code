@@ -2,6 +2,8 @@ import os
 
 
 DATA_PATH = os.getcwd() + "/data/census_clean.csv"
+DATA_SAMPLE_PATH = os.getcwd() + "/data/census_sample.csv"
+
 MODEL_PATH = os.getcwd() + "/model/random_forest.pkl"
 ONEHOT_ENCODER_PATH = os.getcwd() + "/model/onehot_encoder.pkl"
 LABEL_ENCODER_PATH = os.getcwd() + "/model/label_encoder.pkl"
