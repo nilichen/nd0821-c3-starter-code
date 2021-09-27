@@ -9,10 +9,11 @@ from ml.data import process_data
 
 import pickle
 import logging
-from os import name
+import sys
 from collections import namedtuple
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+logging.basicConfig(stream=sys.stdout, level=logging.INFO,
+                    format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 
@@ -69,9 +70,6 @@ def compute_model_metrics(y, preds):
     fbeta = fbeta_score(y, preds, beta=1, zero_division=1)
     precision = precision_score(y, preds, zero_division=1)
     recall = recall_score(y, preds, zero_division=1)
-
-    logger.info(
-        f"Precision: {precision:.2f}, Recall: {recall:.2f}, FBeta: {fbeta:.2f}")
 
     return Metrics(precision, recall, fbeta)
 

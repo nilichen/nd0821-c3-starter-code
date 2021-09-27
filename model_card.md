@@ -7,6 +7,7 @@ For additional information see the Model Card paper: https://arxiv.org/pdf/1810.
 - Date: 2021 Sep 26
 - Type: Random Forest
 - Reference: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+- Performance: Precision: 0.73, Recall: 0.63, FBeta: 0.67
 
 Tuned hyperparameter on 5-fold cv to get the best candidate
 
